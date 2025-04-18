@@ -49,3 +49,13 @@ def sendEmail(to_email, subject, body, from_email, password):
         smtp.login(from_email, password)
         smtp.send_message(msg)
 
+def mailMergePrecheck(template_path):
+    for i, row in excelDf.iterrows():
+        name = row.get("Name", "").strip() if pd.notna(row.get("Name")) else ""
+        email = row.get("Email Address", "").strip() if pd.notna(row.get("Email Address")) else ""
+
+        if not name or not email:
+            print(f"[!] Row {i + 2}: Missing Name or Email — Skipping.")
+            continue
+
+
